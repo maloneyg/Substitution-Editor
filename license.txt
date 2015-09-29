@@ -1,0 +1,12 @@
+****
+Copyright Gregory Maloney, 2015
+except for the javaGeom package, which is used in this project, 
+and hence is included here for convenience although it is 
+subject to its own license.  
+(See http://sourceforge.net/projects/geom-java/)  
+This work is licensed to you under the
+Creative Commons Attribution 3.0 Unported License
+For the full text of the license visit the following address.
+http://creativecommons.org/licenses/by/3.0/deed.en_US
+****
+
