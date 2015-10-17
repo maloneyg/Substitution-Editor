@@ -2,6 +2,7 @@ import java.io.*;
 
 /**
  *  Constants that {@link WorkUnit}s can return.  
+ *  Created by <a href="http://www.people.fas.harvard.edu/~ekwan/">Eugene E. Kwan</a>.  
  */
 public interface Result extends Serializable
 {

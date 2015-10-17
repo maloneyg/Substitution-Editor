@@ -5,6 +5,7 @@ import java.io.*;
 
 /**
  *  A class for managing multiple threads.  
+ *  Created by <a href="http://www.people.fas.harvard.edu/~ekwan/">Eugene E. Kwan</a>.  
  */
 public class GeneralThreadService {
 
