@@ -19,6 +19,8 @@ import java.util.Arrays;
  * A class representing the intersection of two {@link Yarn}s (pseudolines).  
  * The Joins may shift about relative to one another, but each Join always
  * refers to the same two Yarns.  
+ * This was created to be a faster alternative to {@link SimpleRhomb}, but it 
+ * doesn't seem to be much faster in practice.  
  *************************************************************************/
 public class Join implements Rhomb, Serializable {
 

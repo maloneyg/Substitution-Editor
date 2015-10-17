@@ -1,11 +1,3 @@
-
-/*************************************************************************
- *  Compilation:  javac MultiSetLinkedList.java
- *  Execution:    java MultiSetLinkedList
- *
- *
- *************************************************************************/
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -45,6 +37,16 @@ class LinkNode implements Serializable {
 
 } // end of class LinkNode
 
+/**
+ *  A class for iterating through the permutations of a multiset without 
+ *  repetition.  The idea is that it requires a lot of memory to list all 
+ *  permutations of a big multiset at the same time, so this class stores 
+ *  the current permutation in memory and has the ability to 'step' to the 
+ *  permutation that is 'next' in some ordering on all permutations of 
+ *  this multiset.  The ordering is the cool-lex ordering, which, along 
+ *  with this iteration algorithm, is described in the paper by Aaron 
+ *  Williams: <a href="http://epubs.siam.org/doi/abs/10.1137/1.9781611973068.107">Loopless Generation of Multiset Permutations using a Constant Number of Variables by Prefix Shifts</a>.  
+ */
 public class MultiSetLinkedList implements Serializable {
 
     private LinkNode head;
@@ -74,22 +76,50 @@ public class MultiSetLinkedList implements Serializable {
         }
     }
 
-    // public static factory method
+    /**
+     *  Public static factory method.  
+     *  Create a MultiSetLinkedList where the underlying multiset is 
+     *  input as a List of Integers.  
+     *  @param d The underlying multiset, giving as a List of Integers.  
+     *  @return The MultiSetLinkedList that iterates through permutations 
+     *  of d.  
+     */
     public static MultiSetLinkedList createMultiSetLinkedList(List<Integer> d) {
         return new MultiSetLinkedList(d);
     }
 
+    /**
+     *  Public static factory method.  
+     *  Create a MultiSetLinkedList where the underlying multiset is 
+     *  input as an array of Integers.  
+     *  @param d The underlying multiset, giving as an array of Integers.  
+     *  @return The MultiSetLinkedList that iterates through permutations 
+     *  of d.  
+     */
     public static MultiSetLinkedList createMultiSetLinkedList(Integer[] d) {
         return new MultiSetLinkedList(Arrays.asList(d));
     }
 
+    /**
+     *  Public static factory method.  
+     *  Create a MultiSetLinkedList where the underlying multiset is 
+     *  input as an array of int.  
+     *  @param d The underlying multiset, giving as an array of int.  
+     *  @return The MultiSetLinkedList that iterates through permutations 
+     *  of d.  
+     */
     public static MultiSetLinkedList createMultiSetLinkedList(int[] d) {
         List<Integer> dd = new ArrayList<>();
         for (int i = 0; i < d.length; i++) dd.add(d[i]);
         return new MultiSetLinkedList(dd);
     }
 
-    // make a deep copy
+    /**
+     *  Make a deep copy of this.  
+     *  @return Another MultiSetLinkedList with the same underlying 
+     *  multiset as this and in the same state, but with the internal 
+     *  fields pointing to different memory addresses.  
+     */
     public MultiSetLinkedList deepCopy() {
         MultiSetLinkedList output = new MultiSetLinkedList(this.head.getData());
         output.size = this.size;
@@ -107,7 +137,12 @@ public class MultiSetLinkedList implements Serializable {
         return output;
     }
 
-    // output a String
+    /**
+     *  Output a String representation of the current state of this.  
+     *  @return A String containing the current permutation of the 
+     *  underlying multiset, with entries separated by spaces and 
+     *  enclosed by parentheses.  
+     */
     public String toString() {
         String output = "( ";
         LinkNode currentNode = head;
@@ -119,7 +154,9 @@ public class MultiSetLinkedList implements Serializable {
         return output;
     }
 
-    // change into the next multiset in cool-lex order
+    /**
+     *  Change to the next permutation in cool-lex order.  
+     */
     public void iterate() {
         if (size > 1) {
             LinkNode beforek;
@@ -141,7 +178,11 @@ public class MultiSetLinkedList implements Serializable {
         }
     }
 
-    // produce an array of the data in this list
+    /**
+     *  Produce an array version of the current permutation.  
+     *  @return An array representing the current permutation of the 
+     *  underlying multiset.  
+     */
     public int[] getArray() {
         int[] preList = new int[size];
         LinkNode currentNode = head;
@@ -177,24 +218,6 @@ public class MultiSetLinkedList implements Serializable {
         while (currentNode != null)
             result = prime*result + currentNode.getData();
         return result;
-    }
-
-
-    // test client
-    public static void main(String[] args) {
-
-        ArrayList<Integer> test = new ArrayList<>(5);
-        test.add(1);
-        test.add(2);
-        test.add(0);
-        test.add(0);
-        test.add(2);
-        MultiSetLinkedList l = new MultiSetLinkedList(test);
-        for (int i = 0; i < 32; i++) {
-            System.out.println(l);
-            l.iterate();
-        }
-
     }
 
 } // end of class MultiSetLinkedList

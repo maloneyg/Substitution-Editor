@@ -18,8 +18,8 @@ import java.util.Arrays;
 /**
  *  A class representing a patch of rhombic tiles.  
  *  This is equivalent to a pseudoline arrangement.  Here the pseudolines 
- *  are represented by {@link Yarn}s and their intersections by {@link Join}s.  
- *  Each Join corresponds to a rhomb, and each Yarn to a sequence of rhombs,
+ *  are represented by {@link Yarn}s and their intersections by {@link SimpleRhomb}s.  
+ *  Each SimpleRhomb corresponds to a rhomb, and each Yarn to a sequence of rhombs,
  *  each of which shares an edge with the last, and all of which have two edges
  *  in the same family of parallel edges.  
  *  This class contains methods for creating and modifying such arrangements.  

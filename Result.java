@@ -1,5 +1,8 @@
 import java.io.*;
 
+/**
+ *  Constants that {@link WorkUnit}s can return.  
+ */
 public interface Result extends Serializable
 {
     public static final Result JOB_FAILED = new Result() {

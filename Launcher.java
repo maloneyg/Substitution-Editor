@@ -317,23 +317,23 @@ public class Launcher extends JFrame {
     /** options for the JComboBoxes. */
     private static final Integer[] SYMMETRIES = new Integer[] {5,7,9,11,13}; // no point in going past 13
     private static final List<int[][]> ALL_EDGE_SEQUENCES;
-    private static int[][] test = new int[][] {null,
-                                               new int[] {1,-1,0,-2,2,3,-3,0,1,-1,-2,2,0,1,-1,-4,4,3,-3,-2,2,1,-1,0},
-                                               new int[] {1,-1,0,3,-3,1,-1,-2,2,0,1,-1,-2,2,0},
-                                               new int[] {1,-1,3,-3,0,1,-1,-2,2,0,1,-1,-2,2,0},
-                                               new int[] {1,-1,0,1,-1,2,-2,0},
-                                               new int[] {-1,1,0},
-                                               new int[] {-1,1,0,-1,1,0,2,-2,0},
-                                               new int[] {-2,2}
-                                              };
     private static final Integer[] MAX_SUBSTITUTIONS = new Integer[] {2,3,4,5};
+    /**
+     *  The width of this window.  
+     */
     public static final int WIDTH = 700;
+    /**
+     *  The height of this window.  
+     */
     public static final int HEIGHT = 300;
     private final PrototileChecker checker;
     private static JComboBox<Integer> N = new JComboBox<Integer>(SYMMETRIES);
     private static final JComboBox<Integer> maxSubstitutions  = new JComboBox<Integer>(MAX_SUBSTITUTIONS);
+    /**
+     *  The height of the buttons in this window.  
+     */
     public static final int BUTTON_HEIGHT = (int) maxSubstitutions.getPreferredSize().getHeight();
-    private JComboBox<int[]> edgeSequence = new JComboBox<int[]>(test);
+    private JComboBox<int[]> edgeSequence;
     private static final EdgeSequenceEditor editor = new EdgeSequenceEditor();
     private JButton go;
 
@@ -348,6 +348,9 @@ public class Launcher extends JFrame {
         N.setRenderer(new IntegerRenderer<Integer>("","-fold symmetry"));
     }
 
+    /**
+     *  Create and display a Launcher.  
+     */
     public Launcher() throws java.awt.HeadlessException
     {
         // create the layout

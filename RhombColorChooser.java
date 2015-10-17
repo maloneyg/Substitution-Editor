@@ -148,7 +148,7 @@ class RhombSelector extends JPanel {
 } // end of class RhombSelector
 
 /**
- * A class for choosing the colours of prototiles.  
+ * A class for changing the colours of prototiles.  
  */
 public class RhombColorChooser extends JColorChooser
 {
@@ -183,11 +183,6 @@ public class RhombColorChooser extends JColorChooser
         this.setPreviewPanel(selector);
         this.validate();
         this.repaint();
-    }
-
-
-    public static void main(String[] args) {
-
     }
 
 } // end of class RhombColorChooser

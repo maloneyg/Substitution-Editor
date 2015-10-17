@@ -3,11 +3,23 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.*;
 import java.io.*;
 
-public class GeneralThreadService
-{
+/**
+ *  A class for managing multiple threads.  
+ */
+public class GeneralThreadService {
+
+    /**
+     *  The unique instance of this class.  
+     */
     public static final GeneralThreadService INSTANCE = new GeneralThreadService();
+    /**
+     *  The number of threads available for use on this machine.  
+     */
     public final int NUMBER_OF_THREADS         = Runtime.getRuntime().availableProcessors();
-    public static final int JOB_CAPACITY       = 10000000;                                 // how many jobs can wait in the queue at a time
+    /**
+     *  How many jobs can wait in the queue at a time?  
+     */
+    public static final int JOB_CAPACITY       = 10000000;
 
     private final CustomThreadPoolExecutor executorService;
 
@@ -56,7 +68,7 @@ public class GeneralThreadService
 
     public String toString()
     {
-        return "This is a PatchEnsembleThreadService with a " + NUMBER_OF_THREADS + " thread pool with a maximum job capacity of " + JOB_CAPACITY;
+        return "This is a GeneralThreadService with a " + NUMBER_OF_THREADS + " thread pool with a maximum job capacity of " + JOB_CAPACITY;
     }
 
     // this creates customized threads
@@ -76,7 +88,9 @@ public class GeneralThreadService
         }
     }
 
-    // the subclasses of Thread that will do the calculations
+    /**
+     *  The subclasses of Thread that will do the calculations.  
+     */
     public static class WorkerThread extends Thread
     {
         private static final AtomicInteger created = new AtomicInteger();     // thread safe integer

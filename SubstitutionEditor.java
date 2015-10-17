@@ -58,12 +58,20 @@ public class SubstitutionEditor extends JFrame {
     private Point[] infl;
     private List<RhombDisplay> RD;
     private PatchDisplay patch;
+    /** The width of this window.  */
     public static final int WIDTH = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().width;
-    public static final int BUTTON_HEIGHT = 30;
+    /** The height of this window.  */
     public static final int HEIGHT = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height;
+    /** The horizontal space between the edge of the window and the displays.  */
     public static final int XMARGE = 6;
+    /** The horizontal space between adjacent {@link RhombDisplay}s.  */
     public static final int XBUFFER = 10;
+    /**
+     *  The vertical space between the {@link RhombDisplay}s on top and 
+     *  the {@link PatchDisplay} on the bottom.  
+     */
     public static final int YBUFFER = 10;
+    /** The vertical space between the edge of the window and the displays.  */
     public static final int YMARGE = 6;
     /** stuff associated to the menu */
     private JMenuBar menuBar;
@@ -79,12 +87,6 @@ public class SubstitutionEditor extends JFrame {
     private JCheckBox antialiasing;
     private JCheckBox supertiles;
     private ButtonGroup substitutionCount;
-
-    /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-    }
 
     /**
      * Create a new SubstitutionEditor from a saved state.
@@ -412,23 +414,10 @@ public class SubstitutionEditor extends JFrame {
         return new SubstitutionEditorSaveState(rules,edge,ColourPalette.copy(),patch.antialiasing,patch.supertiles,maxSubstitutions);
     }
 
-    public int[] getMaxSize(List<RhombDisplay> RD){
-        int[] size = new int[2];
-        int width = 0;
-        int height = 0;
-        for (RhombDisplay r : RD){
-            if (r.getWidth() >= width){
-                width = r.getWidth();
-            }
-            if (r.getHeight() >= height){
-                height = r.getHeight();
-            }
-        }
-        size[0] = width;
-        size[1] = height;
-        return size;
-    }
-
+    /**
+     *  Update the {@link PatchDisplay} in this.  
+     *  Calls {@link PatchDisplay#update(int)}.  
+     */
     public void updatePatch(){
         patch.update(substitutions);
     }

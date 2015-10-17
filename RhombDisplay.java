@@ -36,10 +36,10 @@ class HexButton extends JButton {
     boolean in = false;
 
     // private constructor
-    private HexButton(Hex tt,RhombDisplay rd) {
+    private HexButton(Hex tt,RhombDisplay rd,RhombBoundary r) {
         this.t = tt;
         this.RD = rd;
-        this.r = RD.getBoundary();
+        this.r = r;
         this.xmin = RD.getXMin();
         this.ymin = RD.getYMin();
         this.setup();
@@ -96,15 +96,14 @@ class HexButton extends JButton {
             {
                         dragging = false;
                         draggable = null;
-//                RD.repaint();
             }
         });
 
     }
 
     // public static factory method
-    public static HexButton createHexButton(Hex t,RhombDisplay d) {
-        return new HexButton(t,d);
+    public static HexButton createHexButton(Hex t,RhombDisplay d,RhombBoundary r) {
+        return new HexButton(t,d,r);
     }
 
     // is this still a hexagon?
@@ -138,14 +137,30 @@ class HexButton extends JButton {
 
 } // end of class HexButton
 
+/**
+ *  A class for drawing and modifying a patch of rhombs.  
+ *  The modifications happen when the user clicks on a trio of rhombs, 
+ *  which are an instance of a {@link Hex}.  The rhombs in this Hex are 
+ *  then rotated, which changes the Hexes in this that can subsequently 
+ *  be modified.  
+ */
 public class RhombDisplay extends JPanel implements ActionListener
 {
 
+    /**
+     *  Extra space added at the left and right of a patch when 
+     *  determining the window size.  
+     */
     public static final int WIDTH_BUFFER = 20;
+    /**
+     *  Extra space added at the top and bottom of a patch when 
+     *  determining the window size.  
+     */
     public static final int HEIGHT_BUFFER = 20;
+    /**
+     *  The default scale for drawing {@link SimpleRhomb}s.  
+     */
     public static final double SCALE = 30.0;
-//    public static final int WIDTH_SHIFT = WIDTH_BUFFER/2;
-//    public static final int HEIGHT_SHIFT = HEIGHT_BUFFER/2;
     private final RhombBoundary r;
     private List<Rhomb> joins;
     private List<HexButton> buttons;
@@ -153,15 +168,32 @@ public class RhombDisplay extends JPanel implements ActionListener
     private final int ymin;
     private final int width;
     private final int height;
+    /**
+     *  The scale that is used for drawing {@link SimpleRhomb}s in this display.  
+     */
     public final double scale;
     private static SubstitutionEditor editor = null;
 
-    // default constructor
+    /**
+     *  Default Constructor.  
+     *  Use the default {@link #SCALE} and infer the window size from the 
+     *  contents of r, with {@link #WIDTH_BUFFER} and {@link HEIGHT_BUFFER} 
+     *  added to the edges.  
+     *  @param r The underlying patch that this allows the user to edit.  
+     */
     public RhombDisplay(RhombBoundary r) throws java.awt.HeadlessException
     {
         this(r,RhombDisplay.SCALE);
     }
 
+    /**
+     *  Constructor with custom dimensions for the window.  
+     *  @param r The underlying patch that this allows the user to edit.  
+     *  @param scale The factor by which the {@link SimpleRhomb}s of r are 
+     *  scaled.  
+     *  @param w The width of this component.  
+     *  @param h The height of this component.  
+     */
     public RhombDisplay(RhombBoundary r, double scale, int w, int h) throws java.awt.HeadlessException
     {
         this.r = r;
@@ -183,6 +215,12 @@ public class RhombDisplay extends JPanel implements ActionListener
         setup();
     }
 
+    /**
+     *  Constructor with custom scale for the {@link SimpleRhomb}s.  
+     *  @param r The underlying patch that this allows the user to edit.  
+     *  @param scale The factor by which the {@link SimpleRhomb}s of r are 
+     *  scaled.  
+     */
     public RhombDisplay(RhombBoundary r, double scale) throws java.awt.HeadlessException
     {
         this.r = r;
@@ -212,7 +250,7 @@ public class RhombDisplay extends JPanel implements ActionListener
 
         buttons = new LinkedList<>();
         for (Hex t : r.getTriples()) {
-            HexButton b = HexButton.createHexButton(t,this);
+            HexButton b = HexButton.createHexButton(t,this,this.r);
             buttons.add(b);
             add(b);
         }
@@ -223,11 +261,21 @@ public class RhombDisplay extends JPanel implements ActionListener
         setBackground(Color.WHITE);
     }
 
+    /**
+     *  Call this method whenever a {@link Hex} is clicked on.  
+     *  @param l The Hexes that can be dragged after this click.  
+     */
     public void click(List<Hex> l) {
         flushButtons(l);
         repaint();
     }
 
+    /**
+     *  Refresh the list of buttons that can be clicked in this.  
+     *  @param l A List of Hexes to add and remove.  For each element of l, 
+     *  if this already has a corresponding button, then we remove it, 
+     *  otherwise we create such a button and add it.  
+     */
     public void flushButtons(List<Hex> l) {
         for (Hex t : l) {
             boolean add = true;
@@ -240,7 +288,7 @@ public class RhombDisplay extends JPanel implements ActionListener
                 }
             }
             if (add) {
-                HexButton b = HexButton.createHexButton(t,this);
+                HexButton b = HexButton.createHexButton(t,this,this.r);
                 buttons.add(b);
                 add(b);
             }
@@ -248,37 +296,65 @@ public class RhombDisplay extends JPanel implements ActionListener
         if (editor!=null) editor.updatePatch();
     }
 
+    /**
+     *  Clear all the buttons and create new ones from the {@link RhombBoundary} 
+     *  in this.  
+     */
     public void resetButtons() {
         for (HexButton hb : buttons) remove(hb);
         buttons.clear();
         for (Hex t : r.getTriples()) {
-            HexButton hb = HexButton.createHexButton(t,this);
+            HexButton hb = HexButton.createHexButton(t,this,this.r);
             add(hb);
             buttons.add(hb);
         }
     }
 
 
+    /**
+     *  Get the width of this.  
+     *  @return The width of this.  
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     *  Get the height of this.  
+     *  @return The height of this.  
+     */
     public int getHeight() {
         return height;
     }
 
+    /**
+     *  Get the minimum x-coordinate of any rhomb in this.  
+     *  @return The minimum x-coordinate of any rhomb in this.  
+     */
     public int getXMin() {
         return xmin;
     }
 
+    /**
+     *  Get the minimum y-coordinate of any rhomb in this.  
+     *  @return The minimum y-coordinate of any rhomb in this.  
+     */
     public int getYMin() {
         return ymin;
     }
 
+    /**
+     *  Get the underlying data structure for this patch.  
+     *  @return The underlying data structure for this patch.  
+     */
     public RhombBoundary getBoundary() {
         return r;
     }
 
+    /**
+     *  Draw this.  
+     *  @param  g The graphis object on which we draw this.  
+     */
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
@@ -304,17 +380,28 @@ public class RhombDisplay extends JPanel implements ActionListener
         return new Dimension(width,height);
     }
 
+    /**
+     *  Print a gap-readable version of the underlying data structure if the 
+     *  print button is pressed.  
+     *  @see RhombBoundary#gapString()  
+     */
     public void actionPerformed(ActionEvent e) {
         if ("print".equals(e.getActionCommand())) {
             System.out.println(r.gapString());
         }
     }
 
+    /**
+     *  Set the {@link SubstitutionEditor} to which all RhombDisplays point.  
+     *  When a RhombDisplay is changed, this change will be reflected in the 
+     *  {@link PatchDisplay} of e.  
+     *  @param e All RhombDisplays will now point to e.  
+     */
     public static void setEditor(SubstitutionEditor e) {
         editor = e;
     }
 
-    /*
+    /**
      * Take a List of RhombBoundaries and return a List of the corresponding RhombDisplays,
      * all given the same scale, which is chosen in such a way as to make each one fit in 
      * a pane of the given dimensions.  
@@ -349,16 +436,5 @@ public class RhombDisplay extends JPanel implements ActionListener
         }
         return RD;
     }
-
-
-    public static void main(String[] args) {
-
-        int[] i1 = new int[] {1,-1,2,0,-2};
-
-        RhombBoundary RB = RhombBoundary.createSymmetricRhombBoundary(Integer.valueOf(args[0]),i1);
-//        RhombDisplay display = new RhombDisplay(RB,"test");
-
-    }
-
 
 } // end of class RhombDisplay

@@ -19,6 +19,12 @@ import java.util.Collection;
 
 import javax.swing.JPanel;
 
+/**
+ *  A class for displaying a collection of {@link SimpleRhombs}.  
+ *  It doesn't allow the user to interact with the SimpleRhobms directly, but 
+ *  it is typically included in a {@link SubstitutionEditor}, which does have 
+ *  interactive elements.  
+ */
 public class PatchDisplay extends JPanel {
     private final List<SimpleRhomb> SEED; // the starting patch before any substitutions
     private List<List<SimpleRhomb>> poly;
@@ -101,6 +107,10 @@ public class PatchDisplay extends JPanel {
         this.YTRANS = h/2 - centroid.y()*SCALE;
     }
 
+    /**
+     *  Draw the contents of this patch.  
+     *  @param g The Graphics on which we draw the patch.  
+     */
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D)g; // cast to Graphics2D
         g2.setColor(Color.WHITE);
@@ -221,7 +231,7 @@ public class PatchDisplay extends JPanel {
 
     /**
      * Produce a String representation of the bounding box of this 
-     * display for use in a postscript file.  
+     * display for use in creating Postscript output.  
      * @return The bounding box in the format "xmin ymin xmax ymax".  
      */
     public String boundingBox() {
