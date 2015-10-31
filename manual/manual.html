@@ -31,7 +31,7 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-<h1>Pages</h1>
+<h1>Other pages</h1>
 
 <p><a href="http://maloneyg.github.io/Substitution-Editor/" target="Home page">Home page</a></p>
 
@@ -48,8 +48,58 @@ java -jar SubstitutionEditor.jar
 </blockquote>
 in the terminal, after navigating to the directory where the .jar file is located.  </p>
 
-<h2>The launcher screen</h2>
-<p>After you have started the program, you should see a screen that looks something like this</p>
+<h2>The launcher window</h2>
+
+<p>After you have started the program, you should see a window that looks something like this:</p>
+
+<p><img src="./launcher01.png" alt="The launcher window"></p>
+
+<p>This is the launcher window, where you select the properties of the substitution rule that you wish to edit.  These properties are the order of symmetry, the edge sequence, and the maximum number of substitutions.  </p>
+
+<h2>Choosing an order of symmetry</h2>
+
+<p>To choose the order of symmetry, select an entry from the drop-down menu in the top left.  The default value is 7-fold symmetry, which means that we are working with a substitution rule on the three rhombs with angles that are multiples of 180&#176;/7; if we change to 11-fold symmetry, then we will edit a substitution rule on the five rhombs with angles that are multiples of 180&#176;/11.</p>
+
+<p><img src="launcher02.png" alt="Choosing the order of symmetry"></p>
+
+<h2>Choosing an edge sequence</h2>
+
+<p>The next step is to choose an edge sequence.  This is done by selecting one of the options from the drop-down menu in the top right.  After choosing an edge sequence, check marks will appear in the boxes underneath the rhombs if it is possible to tile inflated copies of them with the given edge sequence.  (The meaning of this is explained in more detail below.)  If all of the boxes have check marks, then the Go! button in the lower left will be activated, and you can launch the editor.  If not, then you have to choose a different edge sequence.  </p>
+
+<p><img src="launcher03.png" alt="Choosing the edge sequence"></p>
+
+<h2>What the edge sequence represents</h2>
+
+<p>The picture below depicts a tiled region that is shaped like the middle tile in the picture of the launcher, above, except it is inflated and its edges are distorted.  The edge sequence [1, -1, 0, -2, 2, 3, -3, 0, 1, -1, -2, 2, 0, 1, -1, -4, 4, 3, -3, -2, 2, 1, -1, 0] describes this distortion.  </p>
+
+<p><img src="edge-sequence.png" alt="An inflated tile with the given edge sequence"></p>
+
+<p>If you follow the top edge, starting at the top left and moving toward the top right, you will first see a shallow dip, followed by an equally shallow incline.  The dip is at an angle of 1*180&#176;/11 below the horizontal, while the incline is at an angle of 1*180&#176;/11 above the horizontal.  Corresponding to this, the first two entries in the edge sequence are 1 and -1.  Continuing along the top edge, you see a flat line, then a steeper incline (in fact an angle of 2*180&#176;/11 above the horizontal), then a steeper dip (at an angle of 2*180&#176;/11 below the horizontal).  Corresponding to this, the next three entries in the edge sequence are 0, -2, and 2.  And so it goes.</p>
+
+<p>This region has been tiled by copies of the five rhombs with angles that are multiples of 180&#176;/11.  Because it is possible to do this, a check mark appears in the box underneath the middle tile when you choose this edge sequence.  For some edge sequences, it is not possible to tile the region with these shapes.  </p>
+
+<h2>Creating an edge sequence</h2>
+
+<p>It is also possible to create your own edge sequence by typing one into the drag-down menu in the top right of the launcher window.  After typing in a sequence and pressing enter, check marks will appear in the boxes underneath the rhombs that can be tiled with this edge sequence.  </p>
+
+<p><img src="launcher04.png" alt="Creating an edge sequence"></p>
+
+<p>In the image above, only the third and fourth rhombs can be tiled.  This is typical: for a randomly chosen edge sequence, probably most of the inflated rhombs will not be tilable.  Also the rhombs with small angles are usually harder to tile than the ones without small angles.  </p>
+
+<p>If you are interested in searching for new edge sequences, the class <a href="../javadoc/RhombBoundary.html" target="RhombBoundary">RhombBoundary.java</a> has some <a href="../javadoc/RhombBoundary.html#allValid(int[],%20boolean)" target="brute-force search methods">methods for searching for edge sequences by brute force</a>.  You can use these methods by downloading the Java code, modifying the main method in RhombBoundary, and then running RhombBoundary (instead of Launcher).</p>
+
+<h2>Choosing the maximum number of substitutions</h2>
+
+<p>You can also choose the maximum number of substitutions allowed in the editor by selecting an option from the drop-down menu in the bottom right.  Don't worry if it isn't clear yet what this means; it will become clear once you've launched the editor.  It's probably best to choose the default maximum (2 substitutions) unless you are using a small edge sequence.  For example, with 7-fold symmetry and an edge sequence of [1, -1, 0, 1, -1, -2, 2, 0], you might want to go up to a maximum of 3 substitutions.  </p>
+
+<p><img src="launcher05.png" alt="Choosing the maximum number of substitutions"></p>
+
+<h2>The editor window</h2>
+
+<p>After pressing the Go! button, you should see a window that looks something like this.  </p>
+
+<p><img src="editor01.png" alt="The editor window"></p>
+
 
       </section>
     </div>
