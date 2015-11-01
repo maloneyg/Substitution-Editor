@@ -43,9 +43,9 @@
 
 <h2>Installation and running</h2>
 <p>Substitution Editor requires <a href="http://java.com/en/download/" target="download Java">Java</a> to run.  Once you have downloaded Java, then you can run the <a href="../jarball/SubstitutionEditor.jar" target=".jar file">executable .jar file</a> in Windows by double-clicking, or in Linux/Mac by typing the command 
-<blockquote>
+<pre>
 java -jar SubstitutionEditor.jar
-</blockquote>
+</pre>
 in the terminal, after navigating to the directory where the .jar file is located.  </p>
 
 <h2>The launcher window</h2>
@@ -100,8 +100,222 @@ in the terminal, after navigating to the directory where the .jar file is locate
 
 <p><img src="editor01.png" alt="The editor window"></p>
 
-<p>The editor in this image was created by choosing 7-fold symmetry, the edge sequence [1, -1, 0, 1, -1, -2, 2, 0], and a maximum of 3 substitutions in the launcher window.  </p>
+<p>The editor in this image was created by choosing 7-fold symmetry, the edge sequence [1, -1, 0, 1, -1, -2, 2, 0], and a maximum of 3 substitutions in the launcher window.  The three pictures at the top are called the rhomb displays; they represent inflated and distorted copies of the three rhombs from the launcher window.  The picture at the bottom is called the patch display; it represents a typical patch in a substitution tiling arising from the substitution rule represented by the three rhomb displays.</p>
 
+<h2>Supertile outlines</h2>
+
+<p>What does it mean to say that the patch display is a "typical patch in a substitution tiling arising from the substitution rule represented by the three rhomb displays"?  The easiest way to answer this is to select the supertiles button from the View menu.  </p>
+
+<p><img src="editor02.png" alt="Selecting supertile outlines"></p>
+
+<p>After this, the patch display should contain black outlines, as in the following picture:</p>
+
+<p><img src="outlines01.png" alt="Supertile outlines"></p>
+
+<p>The patterns contained within these outlines are rotations and translations of the three rhomb displays.  In order to understand why the outlines appear the way that they do, let us select a different level in the View menu.  </p>
+
+<h2>Changing the level</h2>
+
+<p>In the View menu, select Level 1.  </p>
+
+<p><img src="editor03.png" alt="Changing the level"></p>
+
+<p>Now the patch display should look something like this:</p>
+
+<p><img src="outlines02.png" alt="Supertiles"></p>
+
+<p>For comparison, here is the Level 2 patch display again, with Supertiles on:</p>
+
+<p><img src="outlines01.png" alt="Supertile outlines"></p>
+
+<p>Notice that, wherever there is an outlined region at Level 2, there is a single tile at Level 1.  These Level 1 tiles are called the Supertiles, and at Level 2 they have been cut into pieces according to the pictures in the rhomb displays.  If we cut these tiles into pieces again, we obtain the Level 3 patch display:</p>
+
+<p><img src="outlines03.png" alt="The Level 3 patch display"></p>
+
+<p>Level 3 is a bit crowded, and by default the editor only goes up to Level 2, but this editor was created by choosing Maximum 3 substitutions in the launcher.  With a longer edge sequence, Level 3 would probably be too blurry to see anything of interest.  </p>
+
+<p>What happens if we select Level 0?</p>
+
+<p><img src="outlines00.png" alt="The Level 0 patch display"></p>
+
+<p>At Level 0, the patch display is all yellow.  This is because the Level 0 image is just a rectangular window cut out of the middle of the yellow rhomb.  Likewise, the Level 1 image is a rectangular window cut out of the middle of the rhomb display corresponding to the yellow rhomb.</p>
+
+<p><img src="rhomb-display01.png" alt="The rhomb display of the yellow rhomb"></p>
+
+<p>If we cut up the rhombs inside this rhomb display again, then take a rectangle out of the middle, we get the Level 2 image.  And if we cut up the rhombs a third time, we get the Level 2 image.</p>
+
+<h2>Editing the rhomb displays</h2>
+
+<p>If you move the mouse cursor over the rhomb displays, you will see that some of the rhombs turn red when you hover over them.  This happens if you hover over a group of three rhombs that come together to form a hexagon:</p>
+
+<p><img src="rhomb-display02.png" alt="Three rhombs that form a hexagon"></p>
+
+<p>Clicking on this red hexagon causes it to rotate 180&#176; about its centre:</p>
+
+<p><img src="rhomb-display03.png" alt="Rotating a hexagon"></p>
+
+<p>This rotation causes a change in the patch display in all of the supertiles that come from the yellow rhomb.  Here are the before and after pictures.</p>
+
+<p><img src="outlines01.png" alt="Supertile outlines"></p>
+
+<p><img src="outlines04.png" alt="After rotating a hex"></p>
+
+<p>If you look carefully, you can see that a new blue 7-pointed star has been created at the middle of the after picture; this is the result of flipping three hexes that all share a common vertex.  This is what is meant by "editing"&#8212;Substitution Editor is an editor because it allows you to change a substitution by performing these types of rotations.  </p>
+
+<p>The purpose of Substitution Editor, inasmuch as it has a purpose, is to allow the user to fix up this kind of substitution rule and make it look nice.  Of course, "nice" is a matter of personal taste, but typically symmetry is considered nice.  The picture below depicts a configuration with more symmetry that can be reached from the editor that we started with by applying a sequence of hexagon rotations:</p>
+
+<p><img src="editor04.png" alt="After editing"></p>
+
+<h2>Antialiasing</h2>
+
+<p>The View menu also contains a check box labelled Antialiasing:</p>
+
+<p><img src="antialiasing.png" alt="Antialiasing"></p>
+
+<p>If you select this box, it reduces the rasterization of the outlines of the rhombs in the patch display, resulting in a nicer image.</p>  
+
+<p><img src="editor05.png" alt="Antialiasing at work"></p>
+
+<p>The downside of this is that it takes longer to render, which makes editing slower.</p>
+
+<h2>Changing colours</h2>
+
+<p>The Edit menu contains a button for changing colours.  </p>
+
+<p><img src="change-colours.png" alt="Change colours"></p>
+
+<p>Pressing this button brings up the Colour palette window.  </p>
+
+<p><img src="colour-palette01.png" alt="Colour palette"></p>
+
+<p>Clicking on one of the colour swatches changes the colour of the currently selected rhomb.  The radio buttons at the bottom of the Preview area allow to change which rhomb is currently selected.  </p>
+
+<p><img src="colour-palette02.png" alt="Changing the colour of a rhomb"></p>
+
+<p>The colour change also appears in the rhomb displays and the patch display.  </p>
+
+<p><img src="colour-palette03.png" alt="The new colour appears in all rhombs of that type"></p>
+
+<p>Some of you might notice from the above image that I'm working on this instruction manual at 9:49pm, which is indeed a bit late.</p>  
+
+<h2>The File menu</h2>
+
+<p>The File menu contains various buttons for saving, opening, and beginning new editors.  </p>
+
+<p><img src="new.png" alt="The New button"></p>
+
+<p>The New button opens a new editor.  Ctrl-n is the keyboard shortcut for this.  If you try to open a new editor, the current editor will first check if you want to save your work.  </p>
+
+<p><img src="save-prompt.png" alt="The save prompt"></p>
+
+<p>The Save button allows you to save the current editor.  The keyboard shortcut for this is Ctrl-s.  The default file extension for the saved files is .sub.</p>  
+
+<p>The Open button allows you to open a previously saved editor.  The keyboard shortcut for this is Ctrl-o.  This will also prompt you to save your work.  As the code is currently written, the program will crash if you try to open a file that is not a previously saved editor.  </p>
+
+<p>The Quit button is self explanatory.  The keyboard shortcut is Ctrl-q, and you will be prompted to save your work.  </p>
+
+<h2>PostScript output</h2>
+
+<p>The Save image button allows you to save a copy of the patch display in <a href="https://en.wikipedia.org/wiki/PostScript" target="PostScript">PostScript format</a>.  It will come out upside-down.  Sorry.  </p>
+
+<p><img src="save-image.png" alt="The Save image button"></p>
+
+<p>The image below is not actually a PostScript image, because PostScript does not go well with all web browsers.   The image below is what you get if you convert the PostScript output to .png format.  </p>
+
+<p><img src="postscript-sample.png" alt="PostScript output"></p>
+
+<p>The advantage of PostScript is that it's vector based and easy to edit.  For example, here are the first 80 lines of the PostScript file that produces the picture above.  </p>
+
+<pre bgcolor=#212121>
+%!PS-Adobe-2.0 EPSF-1.2
+%%BoundingBox: 70 -731 1189 -339
+%!PS-Adobe-2.0 EPSF-1.2
+%! PostScript program
+
+28.3464 28.3464 scale    % after this coordinates are in cm
+0.04 setlinewidth
+1 setlinejoin
+1 setlinecap
+
+4 4 translate
+
+/sc 1 def
+/unit{sc mul}def
+
+/c1 180 7 div cos def
+/c2 360 7 div cos def
+/c3 540 7 div cos def
+
+/s1 180 7 div sin def
+/s2 360 7 div sin def
+/s3 540 7 div sin def
+
+/heptorth{
+  /z exch def /y exch def /x exch def /w exch def /v exch def /u exch def 
+  u v c1 mul add w z sub c2 mul add x y sub c3 mul add unit
+    v s1 mul     w z add s2 mul add x y add s3 mul add unit
+}def
+
+% instructions for drawing tiles
+/t1{
+   0.6 0.0 0.2 setrgbcolor
+     0 unit 0 unit moveto
+     1  0 0 0 0 0 heptorth lineto
+     1 -1 0 0 0 0 heptorth lineto
+     0 -1 0 0 0 0 heptorth lineto
+     fill
+   0 0 0 setrgbcolor
+   newpath
+     0 unit 0 unit moveto
+     1  0 0 0 0 0 heptorth lineto
+     1 -1 0 0 0 0 heptorth lineto
+     0 -1 0 0 0 0 heptorth lineto
+     closepath
+   stroke
+}def
+
+/t2{
+   0.2 0.8 1.0 setrgbcolor
+     0 unit 0 unit moveto
+     1 0 0  0 0 0 heptorth lineto
+     1 0 0 -1 0 0 heptorth lineto
+     0 0 0 -1 0 0 heptorth lineto
+     fill
+   0 0 0 setrgbcolor
+   newpath
+     0 unit 0 unit moveto
+     1 0 0  0 0 0 heptorth lineto
+     1 0 0 -1 0 0 heptorth lineto
+     0 0 0 -1 0 0 heptorth lineto
+     closepath
+   stroke
+}def
+
+/t3{
+   0.2 0.4 0.6 setrgbcolor
+     0 unit 0 unit moveto
+     1 0 0 0 0  0 heptorth lineto
+     1 0 0 0 0 -1 heptorth lineto
+     0 0 0 0 0 -1 heptorth lineto
+     fill
+   0 0 0 setrgbcolor
+   newpath
+     0 unit 0 unit moveto
+     1 0 0 0 0  0 heptorth lineto
+     1 0 0 0 0 -1 heptorth lineto
+     0 0 0 0 0 -1 heptorth lineto
+     closepath
+   stroke
+}def
+</pre>
+
+<p>The next 2691 lines of the file contain instructions for drawing all of the different rhombs.  For example:</p>
+
+<pre>
+gsave 3 -8 -4 -14 -6 -11 heptorth translate 257.14285714285717 rotate t3 grestore
+</pre>
+
+<p>So if you can work out what the PostScript code means, then you can modify it and change how the rhombs look.  </p>
 
       </section>
     </div>
@@ -117,3 +331,10 @@ in the terminal, after navigating to the directory where the .jar file is locate
 
   </body>
 </html>
+
+
+
+
+
+
+
